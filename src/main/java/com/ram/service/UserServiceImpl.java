@@ -20,7 +20,7 @@ import com.ram.repository.PasswordResetTokenRepository;
 import com.ram.repository.UserRepository;
 
 @Service
-public class UserServiceImplementation implements UserService {
+public class UserServiceImpl implements UserService {
 
 
 	@Autowired
@@ -33,7 +33,7 @@ public class UserServiceImplementation implements UserService {
 	private PasswordResetTokenRepository passwordResetTokenRepository;
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
+
 //	public UserServiceImplementation(
 //			UserRepository userRepository,
 //			JwtProvider jwtProvider,
@@ -69,12 +69,7 @@ public class UserServiceImplementation implements UserService {
 		return userRepository.findAll();
 	}
 
-	@Override
-	public List<User> getPenddingRestaurantOwner() {
-		
-		return userRepository.getPenddingRestaurantOwners();
-	}
-	
+
 	@Override
     public void updatePassword(User user, String newPassword) {
         user.setPassword(passwordEncoder.encode(newPassword));

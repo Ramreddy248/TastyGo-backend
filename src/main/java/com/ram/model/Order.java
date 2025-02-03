@@ -37,8 +37,7 @@ public class Order {
 	private Restaurant restaurant;
 
 	private Long totalAmount;
-	
-	private String orderStatus;
+
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;

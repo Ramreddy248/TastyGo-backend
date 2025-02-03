@@ -17,7 +17,7 @@ import com.ram.request.CreateFoodRequest;
 
 
 @Service
-public class FoodServiceImplementation implements FoodService {
+public class FoodServiceImpl implements FoodService {
 	@Autowired
 	private foodRepository foodRepository;
 
@@ -75,7 +75,7 @@ public class FoodServiceImplementation implements FoodService {
 		
 		if(keyword!="") {
 			System.out.println("keyword -- "+keyword);
-			items=foodRepository.searchByNameOrCategory(keyword);
+			items=foodRepository.searchByName(keyword);
 		}
 		
 		return items;

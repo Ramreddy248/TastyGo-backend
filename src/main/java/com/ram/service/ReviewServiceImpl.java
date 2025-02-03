@@ -15,7 +15,7 @@ import com.ram.repository.RestaurantRepository;
 import com.ram.repository.ReviewRepository;
 import com.ram.request.ReviewRequest;
 @Service
-public class ReviewServiceImplementation implements ReviewSerive {
+public class ReviewServiceImpl implements ReviewSerive {
     @Autowired
     private ReviewRepository reviewRepository;
     @Autowired

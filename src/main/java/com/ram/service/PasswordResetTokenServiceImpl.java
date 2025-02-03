@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.ram.model.PasswordResetToken;
 import com.ram.repository.PasswordResetTokenRepository;
 @Service
-public class PasswordResetTokenServiceImplementation implements PasswordResetTokenService {
+public class PasswordResetTokenServiceImpl implements PasswordResetTokenService {
 	@Autowired
 	private PasswordResetTokenRepository passwordResetTokenRepository;
 

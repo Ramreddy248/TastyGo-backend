@@ -15,11 +15,11 @@ import com.ram.model.User;
 import com.ram.repository.UserRepository;
 
 @Service
-public class CustomeUserServiceImplementation implements UserDetailsService {
+public class CustomeUserServiceImpl implements UserDetailsService {
 	
 	private UserRepository userRepository;
 	
-	public CustomeUserServiceImplementation(UserRepository userRepository) {
+	public CustomeUserServiceImpl(UserRepository userRepository) {
 		this.userRepository=userRepository;
 	}
 

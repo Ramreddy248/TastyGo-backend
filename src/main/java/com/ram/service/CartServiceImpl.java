@@ -19,7 +19,7 @@ import com.ram.repository.foodRepository;
 import com.ram.request.AddCartItemRequest;
 
 @Service
-public class CartServiceImplementation implements CartSerive {
+public class CartServiceImpl implements CartSerive {
 	@Autowired
 	private CartRepository cartRepository;
 	@Autowired
@@ -41,14 +41,6 @@ public class CartServiceImplementation implements CartSerive {
 
 		Cart cart = findCartByUserId(user.getId());
 
-		for (CartItem cartItem : cart.getItems()) {
-			if (cartItem.getFood().equals(menuItem.get())) {
-
-				int newQuantity = cartItem.getQuantity() + req.getQuantity();
-				return updateCartItemQuantity(cartItem.getId(),newQuantity);
-			}
-		}
-
 		CartItem newCartItem = new CartItem();
 		newCartItem.setFood(menuItem.get());
 		newCartItem.setQuantity(req.getQuantity());
@@ -60,6 +52,7 @@ public class CartServiceImplementation implements CartSerive {
 		cartRepository.save(cart);
 		
 		return savedItem;
+
 
 	}
 
@@ -130,7 +123,5 @@ public class CartServiceImplementation implements CartSerive {
 		cart.getItems().clear();
 		return cartRepository.save(cart);
 	}
-
-	
 
 }

@@ -2,13 +2,14 @@ package com.ram.controller;
 
 import java.util.List;
 
+import com.ram.Exception.CartException;
+import com.ram.Exception.RestaurantException;
+import com.ram.request.CreateOrderRequest;
+import com.stripe.exception.StripeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ram.Exception.OrderException;
 import com.ram.Exception.UserException;
@@ -24,9 +25,25 @@ public class OrderController {
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
-	
+	@PostMapping("/order")
 
-    @GetMapping("/order/user")
+	public ResponseEntity<String>  createOrder(@RequestBody CreateOrderRequest order,
+														@RequestHeader("Authorization") String jwt)
+			throws UserException, RestaurantException,
+			CartException,
+			OrderException{
+		User user=userService.findUserProfileByJwt(jwt);
+		System.out.println("req user "+user.getEmail());
+		if(order!=null) {
+			String res = orderService.createOrder(order,user);
+			return ResponseEntity.ok(res);
+
+		}else throw new OrderException("Please provide valid request body");
+
+	}
+
+
+	@GetMapping("/order/user")
     public ResponseEntity<List<Order>> getAllUserOrders(	@RequestHeader("Authorization") String jwt) throws OrderException, UserException{
     
     	User user=userService.findUserProfileByJwt(jwt);

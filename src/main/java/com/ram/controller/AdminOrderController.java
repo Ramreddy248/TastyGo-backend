@@ -39,9 +39,9 @@ public class AdminOrderController {
     		@RequestParam(required = false) String order_status) throws OrderException, RestaurantException{
     	
     		List<Order> orders = orderService.
-    				getOrdersOfRestaurant(restaurantId,order_status);
+    				getOrdersOfRestaurant(restaurantId);
     		
-//    		System.out.println("ORDER STATUS----- "+orderStatus);
+//    		System.out.println("ORDER STATUS--- "+orderStatus);
     		return ResponseEntity.ok(orders);
     		
     	

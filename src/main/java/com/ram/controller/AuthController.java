@@ -30,7 +30,7 @@ import com.ram.request.LoginRequest;
 import com.ram.request.ResetPasswordRequest;
 import com.ram.response.ApiResponse;
 import com.ram.response.AuthResponse;
-import com.ram.service.CustomeUserServiceImplementation;
+import com.ram.service.CustomeUserServiceImpl;
 import com.ram.service.PasswordResetTokenService;
 import com.ram.service.UserService;
 
@@ -54,7 +54,7 @@ public class AuthController {
 	private JwtProvider jwtProvider;
 
 	@Autowired
-	private CustomeUserServiceImplementation customUserDetails;
+	private CustomeUserServiceImpl customUserDetails;
 
 	@Autowired
 	private CartRepository cartRepository;
