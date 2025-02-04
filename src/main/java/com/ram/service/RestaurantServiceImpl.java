@@ -16,8 +16,7 @@ import com.ram.repository.UserRepository;
 import com.ram.request.CreateRestaurantRequest;
 
 @Service
-public class
-RestaurantServiceImpl implements RestaurantService {
+public class RestaurantServiceImpl implements RestaurantService {
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 	@Autowired

@@ -3,6 +3,9 @@ package com.ram.config;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.ram.service.TokenBlacklistService;
+import com.ram.service.TokenBlacklistServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +24,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @EnableWebSecurity
 public class AppConfig {
 
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -31,7 +36,7 @@ public class AppConfig {
                                 
                                 .anyRequest().permitAll()
                 )
-                .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenValidator(tokenBlacklistService), BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
                

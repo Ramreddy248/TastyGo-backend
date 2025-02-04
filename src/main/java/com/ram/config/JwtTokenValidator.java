@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.crypto.SecretKey;
 
+import com.ram.service.TokenBlacklistService;
+import com.ram.service.TokenBlacklistServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,16 +28,29 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtTokenValidator extends OncePerRequestFilter {
 
-	
+	private final TokenBlacklistService tokenBlacklistService;
+
+	@Autowired
+	public JwtTokenValidator(TokenBlacklistService tokenBlacklistService) {
+		this.tokenBlacklistService = tokenBlacklistService;
+	}
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		String jwt = request.getHeader(JwtConstant.JWT_HEADER);
-		
+
+
 		if(jwt!=null) {
 			jwt=jwt.substring(7);
-			
-			
+
+			if (tokenBlacklistService.isBlacklisted(jwt)) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token is blacklisted");
+				//throw new RuntimeException("Token is already blacklisted");
+				return ;
+
+			}
+
 			try {
 				
 				SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
@@ -59,6 +75,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);
 		
 	}
+
 
 
 }

@@ -2,6 +2,8 @@ package com.ram.controller;
 
 
 import com.ram.domain.USER_ROLE;
+import com.ram.service.TokenBlacklistServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ram.Exception.UserException;
 import com.ram.config.JwtProvider;
@@ -64,6 +62,9 @@ public class AuthController {
 
 	@Autowired
     private UserService userService;
+
+	@Autowired
+	private TokenBlacklistServiceImpl tokenBlacklistServiceImpl;
 
 
 
@@ -208,5 +209,19 @@ public class AuthController {
 		    return ResponseEntity.ok(res);
 
 	    }
+
+	 @GetMapping("/signout")
+	 public ResponseEntity<String> TokenBlackList(HttpServletRequest request){
+		 String token = extractToken(request);
+		 if (token != null) {
+			 tokenBlacklistServiceImpl.addtoBlacklist(token);
+		 }
+		 return ResponseEntity.ok("Logged out successfully");
+	 }
+
+	private String extractToken(HttpServletRequest request) {
+		String authHeader = request.getHeader("Authorization");
+		return (authHeader != null && authHeader.startsWith("Bearer ")) ? authHeader.substring(7) : null;
+	}
 
 }
