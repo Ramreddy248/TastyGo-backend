@@ -52,11 +52,7 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOriginPatterns(Collections.singletonList("*"));
-//                cfg.setAllowedOrigins(Arrays.asList(
-//                    "http://localhost:3000",
-//                    "https://zosh-food.vercel.app",
-//                    "http://localhost:4200"
-//                ));
+
                 cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 cfg.setAllowCredentials(true);
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
